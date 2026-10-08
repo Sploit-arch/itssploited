@@ -170,9 +170,9 @@
 </style>
 </head>
 <body>
-<div id="brand"><b>ItsSploited · AIO Fix / Goldhen</b></div>
+<div id="brand"><b>ItsSploited · Goldhen</b></div>
 <div id="wrap">
-  <div id="state">Detecting what if i can skid your console...</div>
+  <div id="state">Detecting what firmware your console uses...</div>
   <div id="det"></div>
   <div id="cache"></div>
 </div>
@@ -209,7 +209,7 @@
                      : " &middot; not in this build's kernel table");
 
     var target = "jb.html" + location.search;
-    function go() { setState("Skidding your kernel...", "warn"); location.replace(target); }
+    function go() { setState("Initializing GoldHen exploit...", "warn"); location.replace(target); }
 
     function waitForTap(msg, action) {
         setState(msg, "warn");
@@ -225,7 +225,7 @@
     // Off-target consoles are not launched automatically -- one tap still runs
     // it, so a user-agent quirk on the real 13.52 console can never lock it out.
     if (!supported) {
-        setState("Looks like i cant fuck up the ps4", "bad");
+        setState("I cant Jailbreak this firmware", "bad");
         waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
         return;
     }
@@ -247,7 +247,7 @@
     } else {
         setCache("checking cache...");
         ac.addEventListener("downloading",
-            function () { setCache("caching for offline (first run)..."); }, false);
+            function () { setCache("Caching for offline (first run)..."); }, false);
         ac.addEventListener("progress", function (e) {
             if (e && e.total)
                 setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
