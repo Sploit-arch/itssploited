@@ -3,179 +3,148 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>13.52 Exploit</title>
+<title>ItsSploited · GoldHEN Exploit</title>
+
 <style>
-  :root {
-    --bg: #07090d;
-    --panel: rgba(16, 20, 28, .82);
-    --panel-strong: rgba(20, 25, 35, .94);
-    --border: rgba(255,255,255,.09);
-    --text: #f4f7fb;
-    --muted: #8d98a8;
-    --accent: #8b5cf6;
-    --accent-2: #22d3ee;
-    --ok: #34d399;
-    --bad: #fb7185;
-    --warn: #fbbf24;
-  }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    min-height: 100%;
-    background:
-      radial-gradient(circle at 50% -10%, rgba(139,92,246,.20), transparent 38%),
-      radial-gradient(circle at 90% 90%, rgba(34,211,238,.08), transparent 30%),
-      var(--bg);
-    color: var(--text);
-    font: 15px/1.5 "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: linear-gradient(to bottom, black, transparent 80%);
-  }
-
-  #brand {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 66px;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(7,9,13,.72);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-  }
-
-  #brand::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -1px;
-    width: 110px;
-    height: 1px;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
-    box-shadow: 0 0 14px rgba(139,92,246,.65);
-  }
-
-  #brand b {
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: .18em;
-    color: #eef2ff;
-    text-transform: uppercase;
-  }
-
-  #wrap {
-    position: relative;
-    width: min(680px, calc(100% - 32px));
-    margin: auto;
-    padding: 34px 0 42px;
-  }
-
-  #wrap::before {
-    content: "";
-    position: absolute;
-    inset: 18px -1px 0;
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
-    box-shadow:
-      0 28px 80px rgba(0,0,0,.42),
-      inset 0 1px rgba(255,255,255,.035);
-    pointer-events: none;
-  }
-
-  #state, #det, #cache {
-    position: relative;
-    z-index: 1;
-    margin-left: 34px;
-    margin-right: 34px;
-  }
-
-  #state {
-    margin-top: 38px;
-    margin-bottom: 12px;
-    font-size: clamp(25px, 5vw, 38px);
-    line-height: 1.08;
-    letter-spacing: -.035em;
-    font-weight: 800;
-    color: #fff;
-    text-wrap: balance;
-  }
-
-  #state::before {
-    content: "";
-    display: block;
-    width: 42px;
-    height: 4px;
-    margin-bottom: 20px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    box-shadow: 0 0 18px rgba(139,92,246,.55);
-  }
-
-  #det {
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 7px 11px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: rgba(255,255,255,.035);
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: .02em;
-  }
-
-  #det b { color: #dce3ef; font-weight: 700; }
-
-  #cache {
-    min-height: 20px;
-    margin-bottom: 38px;
-    color: #687487;
-    font-size: 12px;
-  }
-
-  #cache.cacheok { color: var(--ok); }
-
-  .ok { color: var(--ok); }
-  .bad { color: var(--bad); }
-  .warn { color: var(--warn); }
-
-  @media (max-width: 520px) {
-    #brand { min-height: 58px; }
-    #brand b { font-size: 11px; letter-spacing: .12em; }
-    #wrap { width: min(100% - 20px, 680px); padding-top: 20px; }
-    #wrap::before { inset: 10px 0 0; border-radius: 22px; }
-    #state, #det, #cache { margin-left: 24px; margin-right: 24px; }
-    #state { margin-top: 30px; font-size: 28px; }
-  }
+:root{
+  --bg:#07070b;
+  --surface:rgba(16,14,24,.72);
+  --surface-2:rgba(19,17,29,.88);
+  --line:rgba(255,255,255,.09);
+  --line-soft:rgba(255,255,255,.055);
+  --text:#f6f4fb;
+  --muted:#8d8999;
+  --purple:#8b5cf6;
+  --purple-2:#a855f7;
+  --green:#57e39b;
+  --red:#fb7185;
+  --yellow:#fbbf24;
+}
+*{box-sizing:border-box}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
+html,body{scrollbar-width:none;-ms-overflow-style:none;margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px/1.5 Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(ellipse 70% 48% at 50% -5%,rgba(113,45,188,.22),transparent 65%),
+    radial-gradient(ellipse 45% 40% at 8% 80%,rgba(90,35,150,.09),transparent 70%),
+    #07070b;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;
+  background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+.page{width:min(1100px,calc(100% - 28px));margin:0 auto;position:relative;z-index:1}
+#brand{
+  height:60px;margin-top:4px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;
+  border:1px solid var(--line);border-radius:19px;background:rgba(13,12,18,.72);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.025);
+}
+.brand-left{display:flex;align-items:center;gap:10px}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--purple);box-shadow:0 0 15px rgba(139,92,246,.8)}
+#brand b{font-size:14px;letter-spacing:-.02em;font-weight:800;color:#f2eef8}
+.nav{display:flex;gap:28px}
+.nav a{color:#918d9d;text-decoration:none;font-weight:600;font-size:13px;transition:.2s ease}
+.nav a:hover{color:#eee9f7}
+.hero{min-height:calc(100vh - 64px);display:flex;flex-direction:column;align-items:center;text-align:center;padding:188px 0 70px}
+.avatar{
+  width:104px;height:104px;border-radius:30px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#b78cff 0%,#7c3aed 48%,#25113d 100%);
+  border:1px solid rgba(255,255,255,.17);box-shadow:0 0 0 5px rgba(139,92,246,.055),0 24px 70px rgba(89,39,155,.28);
+  font-size:31px;font-weight:900;letter-spacing:-.08em;color:white;overflow:hidden;position:relative
+}
+.avatar:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.26),transparent 38%);pointer-events:none}
+.avatar span{position:relative;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.status{
+  margin-top:25px;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(14,13,19,.72);color:#aaa5b3;font-size:11px;font-weight:800;letter-spacing:.1em
+}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(87,227,155,.8)}
+h1{
+  margin:20px 0 0;font-size:clamp(58px,9vw,88px);line-height:.98;letter-spacing:-.065em;font-weight:900;
+  background:linear-gradient(90deg,#fff 0%,#f1eaff 35%,#a855f7 72%,#7c3aed 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 16px 70px rgba(116,58,190,.16)
+}
+.subtitle{margin:18px 0 0;color:#888492;font-size:15px;max-width:560px}
+.card{
+  width:min(720px,100%);margin-top:48px;padding:22px;text-align:left;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(145deg,rgba(22,19,31,.76),rgba(11,10,15,.72));
+  box-shadow:0 28px 80px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.025);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)
+}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.card-title{font-size:16px;font-weight:800;color:#eeeaf4}
+.card-meta{color:#777381;font-size:12px;margin-top:4px}
+.pill{padding:7px 10px;border-radius:999px;border:1px solid rgba(87,227,155,.14);background:rgba(87,227,155,.055);color:#74e8aa;font-size:10px;font-weight:800;letter-spacing:.08em}
+#state{
+  margin:22px 0 0;font-size:15px;line-height:1.4;font-weight:700;color:#ded9e7
+}
+#state:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--purple);box-shadow:0 0 12px rgba(139,92,246,.8);margin:0 9px 1px 0}
+#det{margin-top:10px;color:#716d79;font-size:12px}
+#det b{color:#a9a4b2}
+#cache{min-height:18px;margin-top:5px;color:#615e69;font-size:11px}
+#cache.cacheok{color:#6fdca1}
+.ok{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--yellow)}
+@media(max-width:700px){
+  .page{width:min(100% - 18px,1100px)}
+  #brand{height:56px;border-radius:16px;padding:0 14px}
+  .nav{gap:15px}.nav a{font-size:12px}
+  .hero{padding:110px 0 45px;min-height:calc(100vh - 60px)}
+  .avatar{width:90px;height:90px;border-radius:25px}
+  h1{font-size:clamp(50px,15vw,72px)}
+  .card{margin-top:34px;padding:18px}
+}
+@media(max-width:430px){
+  .nav a:first-child{display:none}
+  .hero{padding-top:90px}
+}
 </style>
-</head>
+
+<style id="center-brand-override">header,.navbar,.nav,.topbar,.site-header{position:relative!important} header .brand,.navbar .brand,.nav .brand,.topbar .brand,.site-header .brand,header .logo,.navbar .logo,.nav .logo,.topbar .logo,.site-header .logo{position:absolute!important;left:50%!important;transform:translateX(-50%)!important}</style><style id="pfp-override">
+.avatar{
+  background-image:url("pfp.jpg") !important;
+  background-size:cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+}
+.avatar span{display:none !important;}
+</style></head>
+
 <body>
-<div id="brand"><b>ItsSploited · Goldhen</b></div>
-<div id="wrap">
-  <div id="state">Detecting what firmware your console uses...</div>
-  <div id="det"></div>
-  <div id="cache"></div>
-</div>
+  <div class="page">
+    <div id="brand">
+      <div class="brand-left"><span class="brand-dot"></span><b>ItsSploited</b></div>
+      <nav class="nav" aria-label="Primary navigation">
+      </nav>
+    </div>
+
+    <main class="hero">
+      <div class="avatar" aria-hidden="true"><span>IS</span></div>
+      <div class="status"><i></i> ONLINE</div>
+      <h1>ItsSploited · Goldhen</h1>
+      <p class="subtitle">PS4 homebrew tools, GoldHEN utilities and projects built for the ItsSploited community.</p>
+
+      <section class="card" id="projects">
+        <div class="card-top">
+          <div>
+            <div class="card-title">ItsSploited GoldHEN Exploit</div>
+            <div class="card-meta">PlayStation 4 · Firmware 13.52</div>
+          </div>
+          <div class="pill">READY</div>
+        </div>
+        <div id="state">Detecting what firmware your console uses...</div>
+        <div id="det"></div>
+        <div id="cache"></div>
+      </section>
+
+      <span id="links" aria-hidden="true"></span>
+    </main>
+  </div>
 
 <script>
 (function () {
