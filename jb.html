@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ItsSploited · GoldHEN</title>
+
+<style>
+:root{--bg:#07070b;--line:rgba(255,255,255,.09);--text:#f6f4fb;--muted:#8d8999;--purple:#8b5cf6;--purple2:#a855f7;--green:#57e39b;--red:#fb7185;--yellow:#fbbf24}
+*{box-sizing:border-box}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
+html,body{scrollbar-width:none;-ms-overflow-style:none;margin:0;min-height:100%;background:#07070b;color:var(--text);font:14px/1.5 Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse 70% 45% at 50% -5%,rgba(113,45,188,.22),transparent 65%),#07070b}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:36px 36px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+.page{width:min(1100px,calc(100% - 28px));margin:0 auto;position:relative;z-index:1}
+#brand{height:60px;margin-top:4px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:19px;background:rgba(13,12,18,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.025)}
+.brand-left{display:flex;align-items:center;gap:10px}.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--purple);box-shadow:0 0 15px rgba(139,92,246,.8)}
+#brand b{font-size:14px;font-weight:800;color:#f2eef8}.nav{display:flex;gap:28px}.nav a{color:#918d9d;text-decoration:none;font-weight:600;font-size:13px}
+#spin{position:fixed;top:45%;left:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border:3px solid rgba(255,255,255,.07);border-top-color:var(--purple);border-right-color:var(--purple2);border-radius:50%;animation:spin .85s linear infinite;box-shadow:0 0 35px rgba(139,92,246,.22)}
+#spin:after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+#msg{position:fixed;z-index:2;top:50%;left:50%;width:min(650px,calc(100% - 30px));transform:translate(-50%,36px);padding:26px 24px;text-align:center;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:22px;background:rgba(15,13,21,.78);box-shadow:0 28px 80px rgba(0,0,0,.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:none}
+#wrap{width:min(900px,calc(100% - 32px));margin:34px auto;padding:24px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,rgba(22,19,31,.76),rgba(11,10,15,.72));box-shadow:0 28px 80px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.025);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#state{display:none;margin:0 0 14px;font-size:clamp(22px,4vw,32px);line-height:1.1;font-weight:800;letter-spacing:-.04em}
+#state:before{content:"";display:block;width:42px;height:4px;margin-bottom:17px;border-radius:999px;background:linear-gradient(90deg,var(--purple),var(--purple2));box-shadow:0 0 18px rgba(139,92,246,.55)}
+#out{display:none;white-space:pre-wrap;font:12px/1.55 "SFMono-Regular",Consolas,"Liberation Mono",monospace;color:#c9c4d3;background:rgba(5,4,8,.72);border:1px solid var(--line);border-radius:16px;padding:18px;height:calc(100vh - 175px);min-height:320px;overflow-y:auto;box-shadow:inset 0 1px rgba(255,255,255,.025)}
+#out::-webkit-scrollbar{width:8px}#out::-webkit-scrollbar-track{background:transparent}#out::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+body.done #spin,body.fail #spin{display:none}
+body.fail #msg{display:block;color:var(--red);border-color:rgba(251,113,133,.18)}
+body.done #msg{display:block;color:var(--green);border-color:rgba(87,227,155,.18)}
+body.log #spin,body.log #msg{display:none}
+body.log #wrap{margin-top:32px}body.log #state,body.log #out{display:block}
+.ok,.safe{color:var(--green)}.bad,.danger{color:var(--red)}.warn{color:var(--yellow)}
+code{color:#b9aed0;background:rgba(255,255,255,.045);padding:2px 5px;border-radius:5px}
+@media(max-width:700px){.page{width:calc(100% - 18px)}#brand{height:56px;border-radius:16px}.nav{gap:15px}.nav a{font-size:12px}#wrap{width:calc(100% - 20px);margin:18px auto;padding:18px;border-radius:20px}#out{height:calc(100vh - 145px);padding:14px}}
+#xmb-waves{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0}
+.page,#wrap{position:relative;z-index:1}
+#spin{z-index:2}
+#msg{z-index:3}
+@media(prefers-reduced-motion:reduce){#xmb-waves{display:none}}
+</style>
+
+<style id="center-brand-override">header,.navbar,.nav,.topbar,.site-header{position:relative!important} header .brand,.navbar .brand,.nav .brand,.topbar .brand,.site-header .brand,header .logo,.navbar .logo,.nav .logo,.topbar .logo,.site-header .logo{position:absolute!important;left:50%!important;transform:translateX(-50%)!important}</style></head>
+<body>
+  <canvas id="xmb-waves" aria-hidden="true"></canvas>
+  <audio id="site-music" src="site-music.mp3" autoplay loop preload="auto" hidden style="display:none!important;width:0;height:0" aria-hidden="true" tabindex="-1"></audio>
+  <div class="page">
+    <div id="brand">
+      <div class="brand-left"><span class="brand-dot"></span><b>ItsSploited</b></div>
+      <nav class="nav"><a href="index.html">Home</a><a href="index.html#projects">Projects</a></nav>
+    </div>
+  </div>
+  <div id="spin"></div>
+  <div id="msg">Restart your console</div>
+  <div id="wrap">
+    <div id="state"></div>
+    <div id="out"></div>
+  </div>
+  <script type="module">
+      import "./jb.js?v=19";
+    </script>
+<script>
+
+(() => {
+  const canvas = document.getElementById('xmb-waves');
+  const ctx = canvas && canvas.getContext('2d');
+  if (!ctx) return;
+
+  let w = 0, h = 0, dpr = 1, raf;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(time) {
+    const t = time * 0.00022;
+    ctx.clearRect(0, 0, w, h);
+
+    // Deep midnight blue with a soft PS3-era violet glow.
+    const bg = ctx.createRadialGradient(w * .32, h * .48, 0, w * .42, h * .5, Math.max(w, h) * .85);
+    bg.addColorStop(0, '#11132b');
+    bg.addColorStop(.48, '#080a18');
+    bg.addColorStop(1, '#030409');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Layered, fine silk ribbons inspired by the original PS3 XMB wave.
+    const layers = [
+      {amp: h*.105, base: h*.60, freq: 1.05, phase: 0.0, color: '64,105,255', alpha:.18, width:2.1},
+      {amp: h*.085, base: h*.63, freq: 1.28, phase: 1.4, color: '107,87,255', alpha:.22, width:1.6},
+      {amp: h*.12,  base: h*.57, freq: .82, phase: 2.5, color: '48,164,255', alpha:.13, width:1.2},
+      {amp: h*.07,  base: h*.66, freq: 1.55, phase: 3.7, color: '154,113,255', alpha:.16, width:1.1},
+      {amp: h*.095, base: h*.61, freq: 1.12, phase: 5.1, color: '94,143,255', alpha:.12, width:.9}
+    ];
+
+    for (let li = 0; li < layers.length; li++) {
+      const L = layers[li];
+      ctx.beginPath();
+      for (let x = -4; x <= w + 4; x += 4) {
+        const u = x / Math.max(w, 1);
+        const envelope = Math.sin(Math.PI * u) * .45 + .55;
+        const y = L.base
+          + Math.sin(u * Math.PI * 2 * L.freq + t * (1.0 + li*.08) + L.phase) * L.amp * envelope
+          + Math.sin(u * Math.PI * 4.1 - t * .7 + L.phase) * L.amp * .22
+          + (u - .5) * h * .08;
+        if (x === -4) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${L.color},${L.alpha})`;
+      ctx.lineWidth = L.width;
+      ctx.shadowColor = `rgba(${L.color},.45)`;
+      ctx.shadowBlur = li < 3 ? 13 : 6;
+      ctx.stroke();
+    }
+
+    // Broad translucent wave bands give the lines a silky, flowing body.
+    for (let i = 0; i < 3; i++) {
+      const phase = t * (.72 + i*.12) + i * 2.1;
+      ctx.beginPath();
+      for (let x = -3; x <= w + 3; x += 5) {
+        const u = x / Math.max(w, 1);
+        const y = h*.61
+          + Math.sin(u * Math.PI * (1.2 + i*.16) + phase) * h*(.105 + i*.012)
+          + Math.sin(u * Math.PI * 3.4 - phase*.8 + i) * h*.035;
+        if (x === -3) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      const glow = ctx.createLinearGradient(0, h*.42, 0, h*.78);
+      glow.addColorStop(0, `rgba(${i===1?'85,110,255':'92,79,220'},0)`);
+      glow.addColorStop(.45, `rgba(${i===1?'85,110,255':'92,79,220'},.055)`);
+      glow.addColorStop(1, `rgba(${i===1?'85,110,255':'92,79,220'},0)`);
+      ctx.strokeStyle = glow;
+      ctx.lineWidth = 24 + i*10;
+      ctx.shadowBlur = 0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+    if (!reduced) raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  draw(0);
+})();
+
+// Keep the supplied soundtrack; browsers may still require prior interaction for audible autoplay.
+(() => {
+  const audio = document.getElementById('site-music');
+  if (!audio) return;
+  audio.volume = 0.35;
+  const play = () => audio.play().catch(() => {});
+  play();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audio.paused) play();
+  });
+})();
+
+</script>
+</body>
+</html>

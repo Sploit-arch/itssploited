@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ItsSploited · GoldHEN Exploit</title>
+
+<style>
+:root{
+  --bg:#07070b;
+  --surface:rgba(16,14,24,.72);
+  --surface-2:rgba(19,17,29,.88);
+  --line:rgba(255,255,255,.09);
+  --line-soft:rgba(255,255,255,.055);
+  --text:#f6f4fb;
+  --muted:#8d8999;
+  --purple:#8b5cf6;
+  --purple-2:#a855f7;
+  --green:#57e39b;
+  --red:#fb7185;
+  --yellow:#fbbf24;
+}
+*{box-sizing:border-box}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
+html,body{scrollbar-width:none;-ms-overflow-style:none;margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px/1.5 Inter,"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(ellipse 70% 48% at 50% -5%,rgba(113,45,188,.22),transparent 65%),
+    radial-gradient(ellipse 45% 40% at 8% 80%,rgba(90,35,150,.09),transparent 70%),
+    #07070b;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;
+  background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+.page{width:min(1100px,calc(100% - 28px));margin:0 auto;position:relative;z-index:1}
+#brand{
+  height:60px;margin-top:4px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;
+  border:1px solid var(--line);border-radius:19px;background:rgba(13,12,18,.72);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.025);
+}
+.brand-left{display:flex;align-items:center;gap:10px}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--purple);box-shadow:0 0 15px rgba(139,92,246,.8)}
+#brand b{font-size:14px;letter-spacing:-.02em;font-weight:800;color:#f2eef8}
+.nav{display:flex;gap:28px}
+.nav a{color:#918d9d;text-decoration:none;font-weight:600;font-size:13px;transition:.2s ease}
+.nav a:hover{color:#eee9f7}
+.hero{min-height:calc(100vh - 64px);display:flex;flex-direction:column;align-items:center;text-align:center;padding:78px 0 55px}
+.avatar{
+  width:104px;height:104px;border-radius:30px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#b78cff 0%,#7c3aed 48%,#25113d 100%);
+  border:1px solid rgba(255,255,255,.17);box-shadow:0 0 0 5px rgba(139,92,246,.055),0 24px 70px rgba(89,39,155,.28);
+  font-size:31px;font-weight:900;letter-spacing:-.08em;color:white;overflow:hidden;position:relative
+}
+.avatar:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.26),transparent 38%);pointer-events:none}
+.avatar span{position:relative;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.status{
+  margin-top:25px;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(14,13,19,.72);color:#aaa5b3;font-size:11px;font-weight:800;letter-spacing:.1em
+}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(87,227,155,.8)}
+h1{
+  margin:20px 0 0;font-size:clamp(58px,9vw,88px);line-height:.98;letter-spacing:-.065em;font-weight:900;
+  background:linear-gradient(90deg,#fff 0%,#f1eaff 35%,#a855f7 72%,#7c3aed 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 16px 70px rgba(116,58,190,.16)
+}
+.subtitle{margin:18px 0 0;color:#888492;font-size:15px;max-width:560px}
+.card{
+  width:min(720px,100%);margin-top:48px;padding:22px;text-align:left;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(145deg,rgba(22,19,31,.76),rgba(11,10,15,.72));
+  box-shadow:0 28px 80px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.025);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)
+}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.card-title{font-size:16px;font-weight:800;color:#eeeaf4}
+.card-meta{color:#777381;font-size:12px;margin-top:4px}
+.pill{padding:7px 10px;border-radius:999px;border:1px solid rgba(87,227,155,.14);background:rgba(87,227,155,.055);color:#74e8aa;font-size:10px;font-weight:800;letter-spacing:.08em}
+#state{
+  margin:22px 0 0;font-size:15px;line-height:1.4;font-weight:700;color:#ded9e7
+}
+#state:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--purple);box-shadow:0 0 12px rgba(139,92,246,.8);margin:0 9px 1px 0}
+#det{margin-top:10px;color:#716d79;font-size:12px}
+#det b{color:#a9a4b2}
+#cache{min-height:18px;margin-top:5px;color:#615e69;font-size:11px}
+#cache.cacheok{color:#6fdca1}
+.ok{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--yellow)}
+
+#xmb-waves{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0}
+.page{z-index:1}
+@media(prefers-reduced-motion:reduce){#xmb-waves{display:none}}
+
+@media(max-width:700px){
+  .page{width:min(100% - 18px,1100px)}
+  #brand{height:56px;border-radius:16px;padding:0 14px}
+  .nav{gap:15px}.nav a{font-size:12px}
+  .hero{padding:70px 0 45px;min-height:calc(100vh - 60px)}
+  .avatar{width:90px;height:90px;border-radius:25px}
+  h1{font-size:clamp(50px,15vw,72px)}
+  .card{margin-top:34px;padding:18px}
+}
+@media(max-width:430px){
+  .nav a:first-child{display:none}
+  .hero{padding-top:60px}
+}
+</style>
+
+<style id="center-brand-override">header,.navbar,.nav,.topbar,.site-header{position:relative!important} header .brand,.navbar .brand,.nav .brand,.topbar .brand,.site-header .brand,header .logo,.navbar .logo,.nav .logo,.topbar .logo,.site-header .logo{position:absolute!important;left:50%!important;transform:translateX(-50%)!important}</style></head>
+
+<body>
+  <canvas id="xmb-waves" aria-hidden="true"></canvas>
+  <div class="page">
+    <div id="brand">
+      <div class="brand-left"><span class="brand-dot"></span><b>ItsSploited</b></div>
+      <nav class="nav" aria-label="Primary navigation">
+      </nav>
+    </div>
+
+    <main class="hero">
+      <div class="status"><i></i> Firmware 13.52 support</div>
+      <h1>ItsSploited exploit host</h1>
+      <p class="subtitle">PS4 GoldHEN exploit host · Firmware 13.52 support</p>
+
+      <section class="card" id="projects">
+        <div class="card-top">
+          <div>
+            <div class="card-title">ItsSploited GoldHEN Exploit</div>
+            <div class="card-meta">PlayStation 4 · Firmware 13.52</div>
+          </div>
+          <div class="pill">READY</div>
+        </div>
+        <div id="state">Detecting what firmware your console uses...</div>
+        <div id="det"></div>
+        <div id="cache"></div>
+      </section>
+
+      <span id="links" aria-hidden="true"></span>
+    </main>
+  </div>
+  <footer style="position:relative;z-index:1;padding:32px 0 24px;text-align:center;color:#666670;font-size:11px"><strong style="display:block;color:#a7a7b0;margin-bottom:6px">ItsSploited exploit host</strong>Credits: ItsSploited</footer>
+  <audio id="site-music" src="site-music.mp3" autoplay loop preload="auto" hidden style="display:none!important;width:0;height:0" aria-hidden="true" tabindex="-1"></audio>
+
+<script>
+(function () {
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+    function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
+    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    var params = new URLSearchParams(location.search);
+
+    // Firmwares this build has a MEASURED kernel table for. jb.js still runs its
+    // own kernel-table-present gate, so this is UX only -- an unlisted firmware
+    // can still be launched with a tap. KEEP IN SYNC with ps4_offsets.js: add a
+    // fwnum here in the SAME commit that fills that firmware's kernel RVAs.
+    // The PS4 reports its minor as two hex digits in the UA (13.52 -> minor 0x52).
+    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 }; // all measured on hardware
+
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        var ms = parseInt(m[2], 16).toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var forced = params.get("force") === "1";
+    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
+        + (supported ? " &middot; <b>supported</b>"
+                     : " &middot; not in this build's kernel table");
+
+    var target = "jb.html" + location.search;
+    function go() { setState("Initializing GoldHen exploit...", "warn"); location.replace(target); }
+
+    function waitForTap(msg, action) {
+        setState(msg, "warn");
+        function fire() {
+            window.removeEventListener("click", fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click", fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    // Off-target consoles are not launched automatically -- one tap still runs
+    // it, so a user-agent quirk on the real 13.52 console can never lock it out.
+    if (!supported) {
+        setState("I cant Jailbreak this firmware", "bad");
+        waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
+        return;
+    }
+
+    var ac = window.applicationCache;
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        go();
+    } else if (!navigator.onLine) {
+        setCache("offline -- from cache", true);
+        go();
+    } else if (ac.status === ac.IDLE) {
+        setCache("cached", true);
+        go();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("update downloaded", true);
+        waitForTap("UPDATE READY -- press X or tap to reload & run",
+                   function () { location.reload(); });
+    } else {
+        setCache("checking cache...");
+        ac.addEventListener("downloading",
+            function () { setCache("Caching for offline (first run)..."); }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total)
+                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+        }, false);
+        ac.addEventListener("cached", function () {
+            setCache("cached for offline use", true);
+            waitForTap("CACHED (first run) -- press X or tap to run", go);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            setCache("update downloaded", true);
+            waitForTap("UPDATE READY -- press X or tap to reload & run",
+                       function () { location.reload(); });
+        }, false);
+        ac.addEventListener("noupdate", function () {
+            setCache("cached -- offline ready", true);
+            go();
+        }, false);
+        ac.addEventListener("error", function () {
+            setCache("cache unavailable");
+            waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            setCache("cache obsolete");
+            waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
+        }, false);
+    }
+})();
+</script>
+<script>
+
+(() => {
+  const canvas = document.getElementById('xmb-waves');
+  const ctx = canvas && canvas.getContext('2d');
+  if (!ctx) return;
+
+  let w = 0, h = 0, dpr = 1, raf;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(time) {
+    const t = time * 0.00022;
+    ctx.clearRect(0, 0, w, h);
+
+    // Deep midnight blue with a soft PS3-era violet glow.
+    const bg = ctx.createRadialGradient(w * .32, h * .48, 0, w * .42, h * .5, Math.max(w, h) * .85);
+    bg.addColorStop(0, '#11132b');
+    bg.addColorStop(.48, '#080a18');
+    bg.addColorStop(1, '#030409');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Layered, fine silk ribbons inspired by the original PS3 XMB wave.
+    const layers = [
+      {amp: h*.105, base: h*.60, freq: 1.05, phase: 0.0, color: '64,105,255', alpha:.18, width:2.1},
+      {amp: h*.085, base: h*.63, freq: 1.28, phase: 1.4, color: '107,87,255', alpha:.22, width:1.6},
+      {amp: h*.12,  base: h*.57, freq: .82, phase: 2.5, color: '48,164,255', alpha:.13, width:1.2},
+      {amp: h*.07,  base: h*.66, freq: 1.55, phase: 3.7, color: '154,113,255', alpha:.16, width:1.1},
+      {amp: h*.095, base: h*.61, freq: 1.12, phase: 5.1, color: '94,143,255', alpha:.12, width:.9}
+    ];
+
+    for (let li = 0; li < layers.length; li++) {
+      const L = layers[li];
+      ctx.beginPath();
+      for (let x = -4; x <= w + 4; x += 4) {
+        const u = x / Math.max(w, 1);
+        const envelope = Math.sin(Math.PI * u) * .45 + .55;
+        const y = L.base
+          + Math.sin(u * Math.PI * 2 * L.freq + t * (1.0 + li*.08) + L.phase) * L.amp * envelope
+          + Math.sin(u * Math.PI * 4.1 - t * .7 + L.phase) * L.amp * .22
+          + (u - .5) * h * .08;
+        if (x === -4) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${L.color},${L.alpha})`;
+      ctx.lineWidth = L.width;
+      ctx.shadowColor = `rgba(${L.color},.45)`;
+      ctx.shadowBlur = li < 3 ? 13 : 6;
+      ctx.stroke();
+    }
+
+    // Broad translucent wave bands give the lines a silky, flowing body.
+    for (let i = 0; i < 3; i++) {
+      const phase = t * (.72 + i*.12) + i * 2.1;
+      ctx.beginPath();
+      for (let x = -3; x <= w + 3; x += 5) {
+        const u = x / Math.max(w, 1);
+        const y = h*.61
+          + Math.sin(u * Math.PI * (1.2 + i*.16) + phase) * h*(.105 + i*.012)
+          + Math.sin(u * Math.PI * 3.4 - phase*.8 + i) * h*.035;
+        if (x === -3) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      const glow = ctx.createLinearGradient(0, h*.42, 0, h*.78);
+      glow.addColorStop(0, `rgba(${i===1?'85,110,255':'92,79,220'},0)`);
+      glow.addColorStop(.45, `rgba(${i===1?'85,110,255':'92,79,220'},.055)`);
+      glow.addColorStop(1, `rgba(${i===1?'85,110,255':'92,79,220'},0)`);
+      ctx.strokeStyle = glow;
+      ctx.lineWidth = 24 + i*10;
+      ctx.shadowBlur = 0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+    if (!reduced) raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  draw(0);
+})();
+
+// Keep the supplied soundtrack; browsers may still require prior interaction for audible autoplay.
+(() => {
+  const audio = document.getElementById('site-music');
+  if (!audio) return;
+  audio.volume = 0.35;
+  const play = () => audio.play().catch(() => {});
+  play();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audio.paused) play();
+  });
+})();
+
+</script>
+</body>
+</html>
